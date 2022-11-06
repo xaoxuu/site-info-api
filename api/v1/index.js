@@ -67,12 +67,12 @@ function getInfo(link, html, callback) {
         const { document } = (new JSDOM(html)).window;
         
         // title
-        let elTitle = document.querySelector('head meta[property="og:title"]');
+        let elTitle = document.querySelector('title');
         if (!elTitle) {
-            elTitle = document.querySelector('title');
+            elTitle = document.querySelector('head meta[property="og:title"]');
         }
         if (elTitle) {
-            title = elTitle.content || elTitle.title;
+            title = elTitle.text || elTitle.content;
         }
         if (title) {
             data.title = title;
