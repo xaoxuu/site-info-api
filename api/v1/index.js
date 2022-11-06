@@ -67,30 +67,25 @@ function getInfo(link, html, callback) {
         const { document } = (new JSDOM(html)).window;
         
         // title
-        let elTitle = document.querySelector('title');
+        let elTitle = document.querySelector('head meta[property="og:title"]');
         if (!elTitle) {
-            elTitle = document.querySelector('head meta[property="og:title"]');
+            elTitle = document.querySelector('title');
         }
-        if (!elTitle) {
-            elTitle = document.querySelector('head meta[property="og:site_name"]');
-        }
-        console.log('elTitle >>', elTitle);
         if (elTitle) {
-            title = elTitle.text || elTitle.content;
+            title = elTitle.content || elTitle.title;
         }
         if (title) {
             data.title = title;
         }
 
         // desc
-        let elDesc = document.querySelector('head meta[name="description"]');
+        let elDesc = document.querySelector('head meta[property="og:description"]');
         if (!elDesc) {
-            elDesc = document.querySelector('head meta[property="og:description"]');
+            elDesc = document.querySelector('head meta[name="description"]');
         }
         if (elDesc) {
             desc = elDesc.content;
         }
-        console.log('elDesc >>', elDesc);
         if (desc) {
             data.desc = desc;
         }
