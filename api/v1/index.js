@@ -1,15 +1,31 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const HOSTS = process.env.HOSTS || ['localhost'];
 
 // /api/v1?url=https://xaoxuu.com
 var https = require('https');
 var cache = {};
 
 export default function handler(req, res) {
+    const referer = req.headers.referer || '';
+    if (referer.length > 0) {
+      const refererHost = new URL(referer).hostname || '';
+      if (!HOSTS.includes(refererHost)) {
+          console.error('referer invalid:', referer);
+          res.send({"title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/"});
+          return;
+      }
+    } else {
+      if (!HOSTS.includes('')) {
+        console.error('referer can not be empty!');
+        res.send({"title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/"});
+        return;
+      }
+    }
+    console.log('referer ok:', referer);
     const url = req.query['url'];
     console.log('url >>', url);
     if (cache[url]) {
-        console.log('cache >>', cache);
         res.send(cache[url]);
     } else {
         main(url, (data) => {
