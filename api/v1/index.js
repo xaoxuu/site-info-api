@@ -17,15 +17,21 @@ export default function handler(req, res) {
       }
     } else {
       if (!HOSTS.includes('')) {
-        console.error('referer can not be empty!');
-        res.send({"title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/"});
-        return;
+          console.error('referer can not be empty!');
+          res.send({"title": "请自部署该服务", "desc": "https://github.com/xaoxuu/site-info-api/"});
+          return;
       }
     }
     console.log('referer ok:', referer);
     const url = req.query['url'];
-    console.log('url >>', url);
+    if (!url.startsWith('http')) {
+        console.error('url invalid:', url);
+        res.send({});
+        return;
+    }
+    console.log('url:', url);
     if (cache[url]) {
+        console.log('use cache');
         res.send(cache[url]);
     } else {
         main(url, (data) => {
@@ -43,25 +49,25 @@ function main(url, callback) {
             html = html + chunk.toString();
         });
         response.on('end', () => {
-            console.log('end >>', response.statusCode);
+            console.log('end:', response.statusCode);
             if (response.statusCode != 200) {
                 let location = response.headers['location'];
                 let isRedirect = [301,302,303,307,308].includes(response.statusCode);
-                console.log('isRedirect >>>', isRedirect);
-                console.log('location >>>', location);
+                console.log('isRedirect:', isRedirect);
+                console.log('location:', location);
                 if (isRedirect && location && location != url) {
                     main(location, callback);
                     return;
                 }
             }
             getInfo(url, html, (data) => {
-                console.log('data >>', data);
+                console.log('data:', data);
                 callback(data);
             });
         });
     });
     request.on('error', error => {
-        console.log('error >>', error);
+        console.error('error:', error);
         callback({});
     })
     request.end();
