@@ -35,8 +35,10 @@ export default function handler(req, res) {
         res.send(cache[url]);
     } else {
         main(url, (data) => {
-            data.url = url;
-            cache[url] = data;
+            if (Object.keys(data).length > 0) {
+                data.url = url;
+                cache[url] = data;
+            }
             res.send(data);
         });
     }
