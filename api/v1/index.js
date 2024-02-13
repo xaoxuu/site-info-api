@@ -30,6 +30,8 @@ export default function handler(req, res) {
         return;
     }
     console.log('url:', url);
+    //添加头
+    res.setHeader("Vercel-CDN-Cache-Control", "max-age=604800");
     if (cache[url]) {
         console.log('use cache');
         res.send(cache[url]);
