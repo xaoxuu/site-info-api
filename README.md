@@ -2,12 +2,12 @@
 
 使用方法示例：
 
-https://site-info.vlts.cc/api/v1?url=https://xaoxuu.com
+https://api.info.mengze2.cn/api/v1/?url=https://mengze2.cn/
 
 如果需要配置到 Stellar 主题中，写法就是：
 
 ```yaml
-api: https://site-info.vlts.cc/api/v1?url=${href}
+api: https://api.info.mengze2.cn/api/v1/?url=${href}
 ```
 
 ## 支持 Vercel 部署
@@ -18,7 +18,7 @@ api: https://site-info.vlts.cc/api/v1?url=${href}
 
 | Key | Value |
 | :-- | :-- |
-| HOSTS | `['', 'localhost', 'xaoxuu.com']` |
+| HOSTS | `['', 'localhost', 'mengze2.cn']` |
 
 > 把示例中的最后一个修改为自己网站的 host 部分。
 > 前两个分别代表空 Referrer、本地预览，可以根据需要选择是否保留。
