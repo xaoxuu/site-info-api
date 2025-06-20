@@ -4,6 +4,7 @@
 
 ```
 https://your-domain/api/v1?url=https://xaoxuu.com
+> 例如: https://site-info-api.vercel.app/api/v1?url=https://xaoxuu.com
 ```
 
 如果需要配置到 Stellar 主题中，写法就是：
