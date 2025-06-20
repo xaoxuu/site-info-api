@@ -2,12 +2,12 @@
 
 使用方法示例：
 
-https://site-info.vlts.cc/api/v1?url=https://xaoxuu.com
+https://site-info.xaox.cc/api/v1?url=https://xaoxuu.com
 
 如果需要配置到 Stellar 主题中，写法就是：
 
 ```yaml
-api: https://site-info.vlts.cc/api/v1?url=${href}
+api: https://site-info.xaox.cc/api/v1?url=${href}
 ```
 
 ## 支持 Vercel 部署
